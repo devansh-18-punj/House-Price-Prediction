@@ -1,0 +1,33 @@
+# Import necessary libraries
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+
+# Load your dataset (replace 'dataset.csv' with your dataset)
+data = pd.read_csv('dataset.csv')
+
+# Assuming your dataset has columns like 'area', 'bedrooms', 'bathrooms', 'price'
+# You can adjust these columns according to your dataset
+X = data[['area', 'bedrooms', 'bathrooms']]  # Features
+y = data['price']  # Target variable
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train the model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Make predictions
+y_pred = model.predict(X_test)
+
+# Evaluate the model
+mse = mean_squared_error(y_test, y_pred)
+print('Mean Squared Error:', mse)
+
+# You can also input custom values to predict the price of a house
+custom_input = [[2500, 4, 3]]  # e.g., area = 2500 sqft, 4 bedrooms, 3 bathrooms
+predicted_price = model.predict(custom_input)
+print('Predicted Price:', predicted_price)
